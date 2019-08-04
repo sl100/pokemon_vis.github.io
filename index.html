@@ -41,21 +41,9 @@
                 // data stack
                 var datastack = d3.stack()
                     .offset(d3.stackOffsetSilhouette).keys(keys)
-                    (data)
+                console.log(datastack)
                 
-                // d3
-                svg
-                    .selectAll("mylayers")
-                    .data(stackedData)
-                    .enter()
-                    .append("path")
-                      .style("fill", function(d) { return color(d.key); })
-                      .attr("d", d3.area()
-                        .x(function(d, i) { return x(d.data.year); })
-                        .y0(function(d) { return y(d[0]); })
-                        .y1(function(d) { return y(d[1]); })
-                    )
-  
+                // plot 
                 
             </script>    
         </svg>
