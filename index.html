@@ -16,8 +16,7 @@
         
         <p> First, let us take an overview of each generation by looking at the average stat distributions for each generation. This will help us see if there has been a noticeable 'power creep' as new games have been released. </p>
         
-        <div id="my_dataviz">
-        
+        <div>
             <script type="text/javascript">
                         
                 // set the dimensions and margins of the graph
@@ -26,7 +25,7 @@
                     height = 550;
 
                 // append the svg object to the body of the page
-                var svg = d3.select("#my_dataviz")
+                var svg = d3.select("div")
                   .append("svg")
                     .attr("width", 600).attr("height", 600)
                   .append("g")
