@@ -16,10 +16,25 @@
         
         <p> First, let us take an overview of each generation by looking at the average stat distributions for each generation. This will help us see if there has been a noticeable 'power creep' as new games have been released. </p>
         
-        <svg width=500 height=500>
+        <div id="my_dataviz">
         
             <script type="text/javascript">
                         
+                // set the dimensions and margins of the graph
+                var margin = {top: 20, right: 30, bottom: 30, left: 60},
+                    width = 600 - margin.left - margin.right,
+                    height = 600 - margin.top - margin.bottom;
+
+                // append the svg object to the body of the page
+                var svg = d3.select("#my_dataviz")
+                  .append("svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                  .append("g")
+                    .attr("transform",
+                          "translate(" + margin.left + "," + margin.top + ")");
+
+                
                 // x and y axes  
                 d3.csv("PKMN Gen Combat Stat Avg.csv", function(data){
                     var x = d3.scaleLinear()
@@ -57,7 +72,7 @@
                         .y1(function(d) { return y(d[1]); })
                     )
             </script>    
-        </svg>
+        </div>
         
         
          
