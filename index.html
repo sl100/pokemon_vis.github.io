@@ -23,11 +23,11 @@
                 d3.csv("pokemon.csv", function(data){
                     var x = d3.scaleLinear()
                         .domain([1,2,3,4,5,6,7]).range([0,400]);
-                    d3.select('svg').append('g').attr('transform','translate(50,450)').call(d3.axisBottom(x));
+                    d3.select('svg').append('g').attr('transform','translate(50,450)').call(d3.axisBottom(x)).tickValues([1,2,3,4,5,6,7]);
                     
                     var y = d3.scaleLinear()
                         .domain([0,300]).range([400,0]);
-                    d3.select('svg').append('g').attr('transform','translate(50,50)').call(d3.axisLeft(y));
+                    d3.select('svg').append('g').attr('transform','translate(50,50)').call(d3.axisLeft(y)).tickValues([0,50,100,150,200,250,300]);
                 })
 
             </script>    
