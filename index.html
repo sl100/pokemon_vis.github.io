@@ -39,12 +39,23 @@
                     .domain(keys).range(colorrange = ["#B30000", "#E34A33", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"]);
                 
                 // data stack
-                var datastack = d3.stack()
-                    .offset(d3.stackOffsetSilhouette).keys(keys)
-                console.log(datastack)
+                var stackedData = d3.stack()
+                    .offset(d3.stackOffsetSilhouette)
+                    .keys(keys)
+                    (data)
                 
                 // plot 
-                
+                svg
+                    .selectAll("mylayers")
+                    .data(stackedData)
+                    .enter()
+                    .append("path")
+                      .style("fill", function(d) { return color(d.key); })
+                      .attr("d", d3.area()
+                        .x(function(d, i) { return x(d.data.year); })
+                        .y0(function(d) { return y(d[0]); })
+                        .y1(function(d) { return y(d[1]); })
+                    )
             </script>    
         </svg>
         
