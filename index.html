@@ -124,13 +124,15 @@
             var height = 600 - margin.top - margin.bottom;
             
             // D3
-            var svg = d3.select("body").append("svg")
+            var svg = d3.selectAll("body").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height+ margin.left + margin.right)
                 .append("g")
             .attr("transform","translate(" + margin.left + "," + margin.top + ")");
             
-            
+            d3.csv("Type Dist by Gen.csv", function(data){
+             
+            }
             
             
         </script>
