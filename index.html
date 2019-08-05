@@ -68,9 +68,9 @@
                     // Functions for mouseover / mousemove / mouseleave
                     var mouseover = function(d) {
                       Tooltip.style("opacity", 1)
-                      d3.selectAll(".myArea").style("opacity", .2)
+                      d3.selectAll(".Hover").style("opacity", .3)
                       d3.select(this)
-                        .style("stroke", "black")
+                        .style("stroke", "green")
                         .style("opacity", 1)
                     }
                     var mousemove = function(d,i) {
@@ -79,7 +79,7 @@
                     }
                     var mouseleave = function(d) {
                       Tooltip.style("opacity", 0)
-                      d3.selectAll(".myArea").style("opacity", 1).style("stroke", "none")
+                      d3.selectAll(".Hover").style("opacity", 1).style("stroke", "none")
                      }
                     //------------------------------------------------------------------
                     
@@ -90,6 +90,7 @@
                         .enter()
                         .append("path")
                           .style("fill", function(d) { return color(d.key); })
+                          .class("Hover")
                           .attr("d", d3.area()
                             .x(function(d, i) { return x(d.data.Generation); })
                             .y0(function(d) { return y(d[0]); })
