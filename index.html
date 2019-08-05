@@ -114,39 +114,40 @@
             by taking a look at this data in a line graph format. This more clearly depicts changes in individual stats. </p>
          
         
-        <div id="line"></div>
         
-        <svg id="visualisation" width="1000" height="500"></svg>
-        <script type='text/javascript'>
-            
-            // set up margins
-            var margin = {top: 25, right:120, bottom: 50, left: 25};
-            var width = 1000 - margin.left - margin.right;
-            var height = 600 - margin.top - margin.bottom;
-            
-            // set axes ranges
-            var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([0, width]);
-            var y = d3.scaleLinear().domain([0, 250]).range([height, 0]);
-            
-            // line
-            var _line = d3.line()
-                .x(function(d){return x(d.Generation);})
-                .y(function(d){return y(d.base_happiness);});
-            
-            // add svg
-            var svg = d3.select('#line')
-                .append('svg')
-                    .attr('width', width + margin.left + margin.right)
-                    .attr('height', height + margin.top + margin.bottom)
-                .append('g')
-                    .attr('transform', 'translate(' +margin.left+ ',' + margin.top + ')');
-            
-            svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
-            svg.append("g").call(d3.axisLeft(y));
-        </script>
         
+        <svg id="line" width="1000" height="500"></svg>
+        <div id="line">
+            <script type='text/javascript'>
+
+                // set up margins
+                var margin = {top: 25, right:120, bottom: 50, left: 25};
+                var width = 1000 - margin.left - margin.right;
+                var height = 600 - margin.top - margin.bottom;
+
+                // set axes ranges
+                var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([0, width]);
+                var y = d3.scaleLinear().domain([0, 250]).range([height, 0]);
+
+                // line
+                var _line = d3.line()
+                    .x(function(d){return x(d.Generation);})
+                    .y(function(d){return y(d.base_happiness);});
+
+                // add svg
+                var svg = d3.select("#line")
+                      .append("svg")
+                        .attr("width", 600).attr("height", 600)
+                      .append("g")
+                        .attr("transform",
+                              "translate(" + margin.left + "," + margin.top + ")");
+
+                svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
+                svg.append("g").call(d3.axisLeft(y));
+            </script>
+        </div>
          
-        <p> Here is another <a href="index2.html">visualization</a>, this time one showing the distributions of type offerings from each generation. </p>
+        <p> Here is another visualization, this time one showing the distributions of type offerings from each generation. </p>
         
         <div id="type_dist"> </div>
         
