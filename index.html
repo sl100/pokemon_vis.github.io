@@ -119,6 +119,19 @@
         <svg id='line' width="800" height="600">
             
         </svg>
+        
+        <script type="text/javascript">
+            var margin = {top: 25, right:120, bottom: 50, left: 25};
+            var width = 1000 - margin.left - margin.right;
+            var height = 600 - margin.top - margin.bottom;
+            
+            var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([0, width]);
+            var y = d3.scaleLinear().domain([0, 250]).range([height, 0]);
+            
+            d3.select('line').append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
+            d3.select('line').append("g").call(d3.axisLeft(y));
+        </script>
+        
         <div id="line">
             <script type="text/javascript">
 
