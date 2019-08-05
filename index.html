@@ -116,6 +116,8 @@
          
         <p> Here is another visualization, this time one showing the distributions of type offerings from each generation. </p>
         
+        <div id="type_dist"> </div>
+        
         <script type='text/javascript'>
             
             // set up svg dimensions
@@ -124,7 +126,7 @@
             var height = 600 - margin.top - margin.bottom;
             
             // D3
-            var svg = d3.selectAll("body").append("svg")
+            var svg = d3.select("#type_dist").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height+ margin.left + margin.right)
                 .append("g")
@@ -141,6 +143,46 @@
                 { generation:"7", normal:"12",fire:"7",fighting:"9",water:"13",flying:"8",grass:"13",poison:"5",electric:"5",ground:"4",psychic:"8",rock:"4",ice:"1",bug:"11",dragon:"6",ghost:"6",dark:"2",steel:"5",fairy:"12"},
                 ];
             
+            var dataset = d3.layout.stack()(["normal","fire","fighting","water","flying","grass","poison","electric","ground","psychic","rock","ice","bug","dragon","ghost","dark","steel","fairy"},].map(function(type) {
+                return data.map(function(d) {
+                    return {x: d.Generation, y: +d[type]};
+              });
+            }));
+            
+            // Set x, y and colors
+            var x = d3.scaleOrdinal()
+              .domain(dataset[0].map(function(d) { return d.x; }))
+              .rangeRoundBands([10, width-10], 0.02);
+
+            var y = d3.scaleLinear()
+              .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
+              .range([height, 0]);
+            
+            keys = data.columns.slice(1)
+            var colors = d3.scaleLinear().domain(keys).range([["#B30000", "#FEF0D9"]);
+                              
+            // x and y axes
+            var yAxis = d3.svg.axis()
+              .scale(y)
+              .orient("left")
+              .ticks(5)
+              .tickSize(-width, 0, 0)
+              .tickFormat( function(d) { return d } );
+
+            var xAxis = d3.svg.axis()
+              .scale(x)
+              .orient("bottom")
+              .tickFormat(d3.time.format("%Y"));
+
+            svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis);
+
+            svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis);                                                 
+                                                              
         </script>
         
     </body>
