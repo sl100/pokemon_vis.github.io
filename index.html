@@ -133,7 +133,7 @@
                           "translate(" + margin.left + "," + margin.top + ")");
                 
                  
-                d3.csv("Type Dist by Gen.csv.csv", function(data){
+                d3.csv("Type Dist by Gen.csv", function(data){
                   
                     // x and y axes 
                     var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([0, width]);
