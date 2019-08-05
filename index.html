@@ -116,7 +116,9 @@
         
         
         
-
+        <svg id='line' width="800" height="600">
+            
+        </svg>
         <div id="line">
             <script type="text/javascript">
 
@@ -126,14 +128,8 @@
                 var height = 600 - margin.top - margin.bottom;
 
                 // add svg
-                var svg = d3.selectAll("div").select("#line")
-                      .append("svg")
-                        .attr("width", 600).attr("height", 600)
-                      .append("g")
-                        .attr("transform",
-                              "translate(" + margin.left + "," + margin.top + ")");
-
-               
+                var svg = d3.select("#line")
+                                   
                 
                 // add data
                 d3.csv("Pokemon Misc Small.csv", function(data){
