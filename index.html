@@ -37,24 +37,15 @@
                 d3.csv("PKMN Gen Combat Stat Avg.csv", function(data){
                   
                   // x and y axes 
-                    var x = d3.scaleLinear()
-                      .domain(d3.extent(data, function(d) { return d.Generation; }))
-                      .range([ 0, width ]);
-                    svg.append("g")
-                      .attr("transform", "translate(0," + height + ")")
-                      .call(d3.axisBottom(x).ticks(5));
+                    var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([ 0, width ]);
+                    svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
 
                     // Add Y axis
-                    var y = d3.scaleLinear()
-                      .domain([-250, 250])
-                      .range([ height, 0 ]);
+                    var y = d3.scaleLinear().domain([-250, 250]).range([ height, 0 ]);
                     svg.append("g")
                       .call(d3.axisLeft(y));
                     // x label
                     svg.append("text").attr("text-anchor", "middle").attr("x", width/2).attr("y", height-20).text("Generation")
-                    
-               
-                    
                     
                     // Keys = CSV column names
                     keys = ['attack', 'defense', 'sp_attack', 'sp_defense', 'speed', 'hp']
@@ -69,7 +60,16 @@
                         .keys(keys)
                         (data)
                 
-                     // Functions for mouseover / mousemove / mouseleave
+                    //----On Demand Details-------------------------------------------- 
+                    // tooltip
+                    var Tooltip = svg
+                        .append("text")
+                        .attr("x", 0)
+                        .attr("y", 0)
+                        .style("opacity", 0)
+                        .style("font-size", 17)
+                    
+                    // Functions for mouseover / mousemove / mouseleave
                     var mouseover = function(d) {
                       Tooltip.style("opacity", 1)
                       d3.selectAll(".myArea").style("opacity", .2)
@@ -85,7 +85,7 @@
                       Tooltip.style("opacity", 0)
                       d3.selectAll(".myArea").style("opacity", 1).style("stroke", "none")
                      }
-
+                    //------------------------------------------------------------------
                     
                     // plot 
                     svg
@@ -114,6 +114,8 @@
             Base totals are good indications of a Pokemon's overall power level. 
             By this streamgraph, we can tell that there has not been too noticeable of 'power creep' over the generations in terms of combat stats, as the base totals have not fluctuated much.</p>
         
+        <p> Now, we can also more clearly take a look at how each of the individual stats changes through the generations, rather than focusing on the base totals,
+            by taking a look at this data in a line graph format. This more clearly depicts changes in individual stats. </p>
          
          
     </body>
