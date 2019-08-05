@@ -131,8 +131,15 @@
             .attr("transform","translate(" + margin.left + "," + margin.top + ")");
             
             d3.csv("Type Dist by Gen.csv", function(data){
-             
-            }
+                console.log(data)
+                
+                // transpose data into layers
+                var dataset = d3.layout.stack()(["normal","fire","fighting","water","flying","grass","poison","electric","ground","psychic","rock","ice","bug","dragon","ghost","dark","steel","fairy"]
+                    .map(function(type){
+                        return data.map(function(d){
+                            return {x: d.Generation, y: +d[type]};
+                        });
+                    }));
             
             
         </script>
