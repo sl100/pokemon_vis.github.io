@@ -130,17 +130,16 @@
                 .append("g")
             .attr("transform","translate(" + margin.left + "," + margin.top + ")");
             
-            d3.csv("Type Dist by Gen.csv", function(data){
-                console.log(data)
-                
-                // transpose data into layers
-                var dataset = d3.layout.stack()(["normal","fire","fighting","water","flying","grass","poison","electric","ground","psychic","rock","ice","bug","dragon","ghost","dark","steel","fairy"]
-                    .map(function(type){
-                        return data.map(function(d){
-                            return {x: d.Generation, y: +d[type]};
-                        });
-                    }));
-            
+            // data set, also can be found in Type Dist by Gen.csv
+            var data = [
+                { generation:"1", normal:"22",fire:"13",fighting:"8",water:"32",flying:"19",grass:"14",poison:"35",electric:"10",ground:"16",psychic:"14",rock:"11",ice:"9",bug:"12",dragon:"3",ghost:"3",dark:"4",steel:"2",fairy:"5"},
+                { generation:"2", normal:"15",fire:"10",fighting:"3",water:"18",flying:"19",grass:"10",poison:"4",electric:"8",ground:"10",psychic:"10",rock:"7",ice:"5",bug:"10",dragon:"1",ghost:"1",dark:"6",steel:"4",fairy:"8"},
+                { generation:"3", normal:"18",fire:"6",fighting:"7",water:"28",flying:"12",grass:"17",poison:"5",electric:"4",ground:"13",psychic:"20",rock:"12",ice:"6",bug:"14",dragon:"9",ghost:"6",dark:"10",steel:"9",fairy:"5"},
+                { generation:"4", normal:"17",fire:"5",fighting:"7",water:"14",flying:"14",grass:"15",poison:"8",electric:"7",ground:"10",psychic:"9",rock:"7",ice:"6",bug:"9",dragon:"6",ghost:"8",dark:"7",steel:"10",fairy:"2"},
+                { generation:"5", normal:"17",fire:"16",fighting:"15",water:"17",flying:"18",grass:"20",poison:"7",electric:"11",ground:"11",psychic:"15",rock:"10",ice:"7",bug:"18",dragon:"10",ghost:"9",dark:"16",steel:"12",fairy:"2"},
+                { generation:"6", normal:"8",fire:"8",fighting:"4",water:"9",flying:"8",grass:"9",poison:"2",electric:"3",ground:"2",psychic:"6",rock:"8",ice:"4",bug:"3",dragon:"9",ghost:"8",dark:"5",steel:"4",fairy:"13"},
+                { generation:"7", normal:"12",fire:"7",fighting:"9",water:"13",flying:"8",grass:"13",poison:"5",electric:"5",ground:"4",psychic:"8",rock:"4",ice:"1",bug:"11",dragon:"6",ghost:"6",dark:"2",steel:"5",fairy:"12"},
+                ];
             
         </script>
         
