@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+        <link rel="stylesheet" href="pokemon.css">
+        <script type="text/javascript" src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+        <title> Assignment 7-3-3 - Stanley  Liu (sliu203) </title>
+    </head>
+    
+    <body margin-top: 10%>
+        
+        <h1> 7-3-3: Complete Pokemon Dataset Visualization by Stanley Liu (sliu203)</h1>
+        
+        <p> This is a data visualization of the Complete Pokemon Dataset from Kaggle which includes data from all Pokemon species from Generations 1-7. For each Pokemon species, fields such as their name, number, primary and secondary typings, base combat stats, and other metrics will be visualized. This will enable us to better understand the unique characteristics of each Pokemon subcategory, whether it be generation, typing, or some other grouping. </p>
+        
+        <p> First, let us take an overview of each generation by looking at the average stat distributions for each generation. This will help us see if there has been a noticeable 'power creep' as new games have been released. 
+        The X axis denotes the generation and the y axis is used to show the bandwidth of a stream, each representing a combat stat (attack, sp. attack, defense, sp. defense, speed, and hp).</p>
+        
+        <div id='base_stats'>
+            <script type="text/javascript">
+                        
+                // set the dimensions and margins of the graph
+                var margin = {top: 25, right: 25, bottom: 25, left: 25},
+                    width = 550,
+                    height = 550;
+                // append the svg object to the body of the page
+                var svg = d3.select("#base_stats")
+                  .append("svg")
+                    .attr("width", 600).attr("height", 600)
+                  .append("g")
+                    .attr("transform",
+                          "translate(" + margin.left + "," + margin.top + ")");
+                
+                 
+                d3.csv("PKMN Gen Combat Stat Avg.csv", function(data){
+                  
+                    // x and y axes 
+                    var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([0, width]);
+                    svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
+                    var y = d3.scaleLinear().domain([-250, 250]).range([height, 0]);
+                    svg.append("g").call(d3.axisLeft(y));
+                    
+                    // Keys = CSV column names
+                    keys = ['attack', 'defense', 'sp_attack', 'sp_defense', 'speed', 'hp']
+                    // color range
+                    var color = d3.scaleOrdinal()
+                        .domain(keys).range(colorrange = ["#B30000", "#E34A33", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"]);
+                    // data stack
+                    var stackedData = d3.stack()
+                        .offset(d3.stackOffsetSilhouette)
+                        .keys(keys)
+                        (data)
+                
+                    //----On Demand Details-------------------------------------------- 
+                    // tooltip
+                    var Tooltip = svg
+                        .append("text")
+                        .attr("x", width/2)
+                        .attr("y", 0)
+                        .style("opacity", 0)
+                        .style("font-size", 15)
+                    
+                    // Functions for mouseover / mousemove / mouseleave
+                    var mouseover = function(d) {
+                      Tooltip.style("opacity", 1)
+                      d3.selectAll(".Hover").style("opacity", .3)
+                      d3.select(this).style("stroke", "green").style("opacity", 1)
+                    }
+                    var mousemove = function(d,i) {
+                      grp = keys[i]
+                      Tooltip.text(grp)
+                    }
+                    var mouseleave = function(d) {
+                      Tooltip.style("opacity", 0)
+                      d3.selectAll(".Hover").style("opacity", 1).style("stroke", "none")
+                     }
+                    //------------------------------------------------------------------
+                    
+                    // plot 
+                    svg
+                        .selectAll("mylayers")
+                        .data(stackedData)
+                        .enter()
+                        .append("path")
+                          .style("fill", function(d) { return color(d.key); })
+                          .attr("class","Hover")
+                          .attr("d", d3.area()
+                            .x(function(d, i) { return x(d.data.Generation); })
+                            .y0(function(d) { return y(d[0]); })
+                            .y1(function(d) { return y(d[1]); })
+                          )
+                          .on("mouseover", mouseover)
+                          .on("mousemove", mousemove)
+                          .on("mouseleave", mouseleave)
+                })
+                
+                
+            </script>    
+        </div>
+ </body>
+</html>
