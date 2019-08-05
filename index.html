@@ -36,16 +36,12 @@
                  
                 d3.csv("PKMN Gen Combat Stat Avg.csv", function(data){
                   
-                  // x and y axes 
+                    // x and y axes 
                     var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([ 0, width ]);
                     svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
 
-                    // Add Y axis
                     var y = d3.scaleLinear().domain([-250, 250]).range([ height, 0 ]);
-                    svg.append("g")
-                      .call(d3.axisLeft(y));
-                    // x label
-                    svg.append("text").attr("text-anchor", "middle").attr("x", width/2).attr("y", height-20).text("Generation")
+                    svg.append("g").call(d3.axisLeft(y));
                     
                     // Keys = CSV column names
                     keys = ['attack', 'defense', 'sp_attack', 'sp_defense', 'speed', 'hp']
