@@ -69,6 +69,24 @@
                         .keys(keys)
                         (data)
                 
+                     // Functions for mouseover / mousemove / mouseleave
+                    var mouseover = function(d) {
+                      Tooltip.style("opacity", 1)
+                      d3.selectAll(".myArea").style("opacity", .2)
+                      d3.select(this)
+                        .style("stroke", "black")
+                        .style("opacity", 1)
+                    }
+                    var mousemove = function(d,i) {
+                      grp = keys[i]
+                      Tooltip.text(grp)
+                    }
+                    var mouseleave = function(d) {
+                      Tooltip.style("opacity", 0)
+                      d3.selectAll(".myArea").style("opacity", 1).style("stroke", "none")
+                     }
+
+                    
                     // plot 
                     svg
                         .selectAll("mylayers")
@@ -80,7 +98,10 @@
                             .x(function(d, i) { return x(d.data.Generation); })
                             .y0(function(d) { return y(d[0]); })
                             .y1(function(d) { return y(d[1]); })
-                        ) 
+                          )
+                          .on("mouseover", mouseover)
+                          .on("mousemove", mousemove)
+                          .on("mouseleave", mouseleave)
                 })
                 
                 
