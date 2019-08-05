@@ -114,35 +114,8 @@
             by taking a look at this data in a line graph format. This more clearly depicts changes in individual stats. </p>
          
         
-        <div class="chart-wrapper" id="chart-line"></div>
-        <script type='text/javascript'> 
-            
-            //
-            d3.csv("PKMN Gen Combat Stat Avg.csv", function(data){
-                data.forEach(function(d){
-                    d.Generation = +d.Generation;
-                    d.attack = +d.attack;
-                    d.sp_attack = +d.sp_attack;
-                    d.defense = +d.defense;
-                    d.sp_defense = +d.defense;
-                    d.speed = +d.speed;
-                    d.hp = +d.hp;
-                    
-                });
-                
-                var chart = makeLineChart(data, 'Generation', {
-                "Attack: " {column: 'attack'},
-                "Special Attack: " {column: 'sp_attack'},
-                "Defense: " {column: 'defense'},
-                "Special Defense: " {column: 'sp_defense'},
-                "Speed: " {column: 'speed'},
-                "HP: " {column: 'hp'}
-                }, {xAxis: 'Generation', yAxis: 'Value'});
-                chart.bind('#chart-line');
-                chart.render();
-            });
-            
-        </script>
+        <div id="line"></div>
+        
         
         
          
