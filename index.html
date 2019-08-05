@@ -116,7 +116,22 @@
         
         <div id="line"></div>
         
-        
+        <svg id="visualisation" width="1000" height="500"></svg>
+        <script type='text/javascript'>
+            
+            // set up margins
+            var margin = {top: 25, right:120, bottom: 50, left: 25};
+            var width = 1000 - margin.left - margin.right;
+            var height = 600 - margin.top - margin.bottom;
+            
+            // set axes ranges
+            var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([0, width]);
+            d3.selectAll('div').select('#line').append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
+
+            var y = d3.scaleLinear().domain([0, 250]).range([height, 0]);
+            d3.selectAll('div').select('#line').append("g").call(d3.axisLeft(y));
+            
+        </script>
         
          
         <p> Here is another <a href="index2.html">visualization</a>, this time one showing the distributions of type offerings from each generation. </p>
