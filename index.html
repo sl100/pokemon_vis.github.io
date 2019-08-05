@@ -116,6 +116,24 @@
          
         <p> Here is another visualization, this time one showing the distributions of type offerings from each generation. </p>
         
+        <script type='text/javascript'>
+            
+            // set up svg dimensions
+            var margin = {top: 25, right:120, bottom: 50, left: 25};
+            var width = 1000 - margin.left - margin.right;
+            var height = 600 - margin.top - margin.bottom;
+            
+            // D3
+            var svg = d3.select("body").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height+ margin.left + margin.right)
+                .append("g")
+            .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+            
+            
+            
+            
+        </script>
         
     </body>
 </html>
