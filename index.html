@@ -114,5 +114,90 @@
             by taking a look at this data in a line graph format. This more clearly depicts changes in individual stats. </p>
          
          
+        <p> Here is another visualization, this time one showing the distributions of type offerings from each generation. </p>
+        
+        
+        <div>
+            <script type="text/javascript">
+                        
+                // set the dimensions and margins of the graph
+                var margin = {top: 25, right: 25, bottom: 25, left: 25},
+                    width = 550,
+                    height = 550;
+                // append the svg object to the body of the page
+                var svg = d3.select("div")
+                  .append("svg")
+                    .attr("width", 600).attr("height", 600)
+                  .append("g")
+                    .attr("transform",
+                          "translate(" + margin.left + "," + margin.top + ")");
+                
+                 
+                d3.csv("Type Dist by Gen.csv.csv", function(data){
+                  
+                    // x and y axes 
+                    var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.Generation; })).range([0, width]);
+                    svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x).ticks(5));
+                    var y = d3.scaleLinear().domain([-250, 250]).range([height, 0]);
+                    svg.append("g").call(d3.axisLeft(y));
+                    
+                    // Keys = CSV column names
+                    keys = ['attack', 'defense', 'sp_attack', 'sp_defense', 'speed', 'hp']
+                    // color range
+                    var color = d3.scaleLinear()
+                        .domain(keys).range(colorrange = ["#B30000","#FEF0D9"]);
+                    // data stack
+                    var stackedData = d3.stack()
+                        .offset(d3.stackOffsetSilhouette)
+                        .keys(keys)
+                        (data)
+                
+                    //----On Demand Details-------------------------------------------- 
+                    // tooltip
+                    var Tooltip = svg
+                        .append("text")
+                        .attr("x", width/2)
+                        .attr("y", 0)
+                        .style("opacity", 0)
+                        .style("font-size", 15)
+                    
+                    // Functions for mouseover / mousemove / mouseleave
+                    var mouseover = function(d) {
+                      Tooltip.style("opacity", 1)
+                      d3.selectAll(".Hover").style("opacity", .3)
+                      d3.select(this).style("stroke", "green").style("opacity", 1)
+                    }
+                    var mousemove = function(d,i) {
+                      grp = keys[i]
+                      Tooltip.text(grp)
+                    }
+                    var mouseleave = function(d) {
+                      Tooltip.style("opacity", 0)
+                      d3.selectAll(".Hover").style("opacity", 1).style("stroke", "none")
+                     }
+                    //------------------------------------------------------------------
+                    
+                    // plot 
+                    svg
+                        .selectAll("mylayers")
+                        .data(stackedData)
+                        .enter()
+                        .append("path")
+                          .style("fill", function(d) { return color(d.key); })
+                          .attr("class","Hover")
+                          .attr("d", d3.area()
+                            .x(function(d, i) { return x(d.data.Generation); })
+                            .y0(function(d) { return y(d[0]); })
+                            .y1(function(d) { return y(d[1]); })
+                          )
+                          .on("mouseover", mouseover)
+                          .on("mousemove", mousemove)
+                          .on("mouseleave", mouseleave)
+                })
+                
+                
+            </script>    
+        </div>
+        
     </body>
 </html>
